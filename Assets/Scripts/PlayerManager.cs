@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
 
-    public Player player;
+    public Actors player;
     public PlayerClasses playerClass;
     public Skills skills;
     public Weapons weapons;

@@ -2,15 +2,18 @@ using System.Linq;
 using System;
 using UnityEditor;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
+using System.Numerics;
 
 public class DatabaseEditorWindow : EditorWindow
 {
-    private string[] _tabs = { "Actors", "Classes", "Skills", "Weapons" };
+    private string[] _tabs = { "Actors", "Classes", "Skills", "Weapons", "Items" };
     private int _selectedTab;
-    private Player _player;
+    private Actors _actor;
     public PlayerClasses _playerClasses;
     public Skills skills;
     public Weapons weapons;
+    public Items items;
     public PlayerClass playerClass;
     
     [MenuItem("Window/Database Editor")]
@@ -34,20 +37,20 @@ public class DatabaseEditorWindow : EditorWindow
             case 0:
                 // code for actors tab 
 
-                _player = (Player)EditorGUILayout.ObjectField(_player, typeof(Player), false);
+                _actor = (Actors)EditorGUILayout.ObjectField(_actor, typeof(Actors), false);
 
-                if (_player == null)
+                if (_actor == null)
                 {
                     if (GUILayout.Button("Create New Player"))
                     {
-                        _player = CreateInstance<Player>();
-                        AssetDatabase.CreateAsset(_player, "Assets/Player Information/Player General/NewPlayer.asset");
-                        AssetDatabase.SaveAssets();
+                        _actor = CreateInstance<Actors>();
+                        AssetDatabase.CreateAsset(_actor, "Assets/Player Information/Player General/NewPlayer.asset");
+                        AssetDatabase.SaveAssets();    
                     }
                 }
                 else
                 {
-                    string assetPath = AssetDatabase.GetAssetPath(_player);
+                    string assetPath = AssetDatabase.GetAssetPath(_actor);
                     string assetName = assetPath.Substring(assetPath.LastIndexOf("/") + 1).Replace(".asset", "");
                     string newAssetName = EditorGUILayout.TextField("Asset Name", assetName);
 
@@ -57,22 +60,34 @@ public class DatabaseEditorWindow : EditorWindow
                         AssetDatabase.RenameAsset(assetPath, newAssetName);
                     }
 
-                    _player.playerName = EditorGUILayout.TextField("Name", _player.playerName);
-                    _player.description = EditorGUILayout.TextField("Description", _player.description);
-                    _player.level = EditorGUILayout.IntField("Level", _player.level);
-                    _player.playerSprite = (Sprite)EditorGUILayout.ObjectField("Sprite", _player.playerSprite, typeof(Sprite), false);
-
+                    _actor.playerName = EditorGUILayout.TextField("Name", _actor.playerName);
+                    _actor.description = EditorGUILayout.TextField("Description", _actor.description);
+                    _actor.level = EditorGUILayout.IntField("Level", _actor.level);
+                    _actor.playerSprite = (Sprite)EditorGUILayout.ObjectField("Sprite", _actor.playerSprite, typeof(Sprite), false);
+                    _actor.actors = (Actors)EditorGUILayout.ObjectField("Actors", _actor.actors, typeof(Actors), false);
+                    //_actor.actors = Actors.All[Mathf.Clamp(EditorGUILayout.Popup("Actors", Actors.All.IndexOf(_actor.actors), Actors.All.Select(a => a.name).ToArray()), 0, Actors.All.Count - 1)];
+                    
                     if (GUILayout.Button("Reset"))
                     {
-                        _player.Reset();
+                        _actor.Reset();
                     }
 
                     if (GUILayout.Button("Save"))
                     {
-                        EditorUtility.SetDirty(_player);
+                        EditorUtility.SetDirty(_actor);
                         AssetDatabase.SaveAssets();
+
+                        //save Actor
+                        Actors.All.Add(_actor);
+
                     }
 
+                    if (GUILayout.Button("Create New Player"))
+                    {
+                        _actor = CreateInstance<Actors>();
+                        AssetDatabase.CreateAsset(_actor, "Assets/Resources/NewActor.asset");
+                        AssetDatabase.SaveAssets();
+                    }
                 }
 
                 break;
@@ -165,7 +180,8 @@ public class DatabaseEditorWindow : EditorWindow
                     skills.skillName = EditorGUILayout.TextField("Skill Name", skills.skillName);
                     skills.description = EditorGUILayout.TextField("Description", skills.description);
                     skills.skillID = EditorGUILayout.IntField("Skill ID", skills.skillID);
-                    skills.requiredWeapon = (WeaponType)EditorGUILayout.EnumPopup("Required Weapon", skills.requiredWeapon);
+                    //skills.requiredWeapon = (WeaponType)EditorGUILayout.EnumPopup("Required Weapon", skills.requiredWeapon);
+                    
                     skills.skillPower = EditorGUILayout.IntField("Skill Power", skills.skillPower);
                     skills.skillCost = EditorGUILayout.IntField("Skill Cost", skills.skillCost);
                     skills.skillType = EditorGUILayout.IntField("Skill Type", skills.skillType);
@@ -188,6 +204,8 @@ public class DatabaseEditorWindow : EditorWindow
                     {
                         EditorUtility.SetDirty(skills);
                         AssetDatabase.SaveAssets();
+
+
                     }
                 }
 
@@ -227,6 +245,63 @@ public class DatabaseEditorWindow : EditorWindow
                     //weapons.weaponID = EditorGUILayout.IntField("Weapon ID", weapons.weaponID);
                     weapons.weaponType = (WeaponType)EditorGUILayout.EnumPopup("Weapon Type", weapons.weaponType);             
                 }
+
+                break;
+            case 4:
+                // Code for items
+
+                items = (Items)EditorGUILayout.ObjectField(items, typeof(Items), false);
+
+
+                if (items == null)
+                {
+                    if (GUILayout.Button("Create New Item"))
+                    {
+                        items = CreateInstance<Items>();
+                        AssetDatabase.CreateAsset(items, "Assets/Player Information/Player Items/NewItem.asset");
+                        AssetDatabase.SaveAssets();
+                    }
+                }
+                else
+                {
+                    string assetPath = AssetDatabase.GetAssetPath(items);
+                    string assetName = assetPath.Substring(assetPath.LastIndexOf("/") + 1).Replace(".asset", "");
+                    string newAssetName = EditorGUILayout.TextField("Asset Name", assetName);
+
+                    if (assetName != newAssetName)
+                    {
+                        string newAssetPath = assetPath.Replace(assetName, newAssetName);
+                        AssetDatabase.RenameAsset(assetPath, newAssetName);
+                    }
+                }
+
+
+                if (items != null)
+                {
+                    // load item data
+                    items.itemName = EditorGUILayout.TextField("Item Name", items.itemName);
+                    items.description = EditorGUILayout.TextField("Description", items.description);
+                    items.itemID = EditorGUILayout.IntField("Item ID", items.itemID);
+                    items.itemPower = EditorGUILayout.IntField("Item Power", items.itemPower);
+                    items.itemCost = EditorGUILayout.IntField("Item Cost", items.itemCost);
+                    items.itemStatus = EditorGUILayout.IntField("Item Status", items.itemStatus);
+                    items.itemStatusChance = EditorGUILayout.IntField("Item Status Chance", items.itemStatusChance);
+                    items.itemStatusDuration = EditorGUILayout.IntField("Item Status Duration", items.itemStatusDuration);
+                    items.itemStatusPower = EditorGUILayout.IntField("Item Status Power", items.itemStatusPower);
+                    items.itemStatusResistance = EditorGUILayout.IntField("Item Status Resistance", items.itemStatusResistance);
+
+                    if (GUILayout.Button("Reset"))
+                    {
+                        items.Reset();
+                    }
+
+                    if (GUILayout.Button("Save"))
+                    {
+                        EditorUtility.SetDirty(items);
+                        AssetDatabase.SaveAssets();
+                    }
+                }
+
 
                 break;
         }

@@ -1,12 +1,15 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Skill", menuName = "Create New Skill")]
 public class Skills : ScriptableObject
 {
+    public Dictionary<string, int> values = new Dictionary<string, int>();
+    public int nextValue = 0;
     public string skillName;
     public string description;
     public int skillID;
-    public WeaponType requiredWeapon;
+    //public WeaponType requiredWeapon;
     public int skillPower;
     public int skillCost;
     public int skillType;
@@ -18,6 +21,39 @@ public class Skills : ScriptableObject
     public int skillStatusDuration;
     public int skillStatusPower;
     public int skillStatusResistance;
+
+
+    private static List<Items> all;
+    public static List<Items> All
+    {
+        get
+        {
+            if (all == null)
+            {
+                all = new List<Items>(Resources.LoadAll<Items>(""));
+            }
+
+            return all;
+        }
+    }
+
+    public void AddValue(string value)
+    {
+        values.Add(value, nextValue);
+        nextValue++;
+    }
+
+    public int GetValue(string value)
+    {
+        return values[value];
+    }
+
+    public string[] GetNames()
+    {
+        string[] names = new string[values.Count];
+        values.Keys.CopyTo(names, 0);
+        return names;
+    }
 
     public void ParameterChanges()
     {

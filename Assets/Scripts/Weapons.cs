@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum WeaponType
@@ -12,6 +13,8 @@ public enum WeaponType
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Create New Weapon")]
 public class Weapons : ScriptableObject
 {
+    public Dictionary<string, int> values = new Dictionary<string, int>();
+    public int nextValue = 0;
     public GameObject weaponObject;
     public Collider2D weaponCollider;
     public string weaponName;
@@ -20,7 +23,40 @@ public class Weapons : ScriptableObject
     public int price;
     
     private PlayerClasses playerClasses;
-    
+
+
+    private static List<Items> all;
+    public static List<Items> All
+    {
+        get
+        {
+            if (all == null)
+            {
+                all = new List<Items>(Resources.LoadAll<Items>(""));
+            }
+
+            return all;
+        }
+    }
+
+    public void AddValue(string value)
+    {
+        values.Add(value, nextValue);
+        nextValue++;
+    }
+
+    public int GetValue(string value)
+    {
+        return values[value];
+    }
+
+    public string[] GetNames()
+    {
+        string[] names = new string[values.Count];
+        values.Keys.CopyTo(names, 0);
+        return names;
+    }
+
     public void ParameterChanges()
     {
         {

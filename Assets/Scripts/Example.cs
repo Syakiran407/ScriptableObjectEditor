@@ -5,10 +5,14 @@ public class Example : MonoBehaviour
 
     [SerializeField]
     public RuntimeEnumData runtimeEnumData;
+    [SerializeField]
+    public Weapons weapons;
+    [SerializeField]
+    public Skills skills;
 
     void Start()
     {
-        runtimeEnumData.AddValue("Red");
+       /* runtimeEnumData.AddValue("Red");
         runtimeEnumData.AddValue("Green");
         runtimeEnumData.AddValue("Blue");
 
@@ -18,6 +22,6 @@ public class Example : MonoBehaviour
 
         Debug.Log("Red Value: " + redValue);
         Debug.Log("Green Value: " + greenValue);
-        Debug.Log("Blue Value: " + blueValue);
+        Debug.Log("Blue Value: " + blueValue);*/
     }
 }
