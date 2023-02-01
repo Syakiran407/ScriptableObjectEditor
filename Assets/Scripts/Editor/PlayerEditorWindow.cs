@@ -1,7 +1,9 @@
+using System.Linq;
+using System;
 using UnityEditor;
 using UnityEngine;
 
-public class PlayerEditorWindow : EditorWindow
+public class DatabaseEditorWindow : EditorWindow
 {
     private string[] _tabs = { "Actors", "Classes", "Skills", "Weapons" };
     private int _selectedTab;
@@ -11,14 +13,16 @@ public class PlayerEditorWindow : EditorWindow
     public Weapons weapons;
     public PlayerClass playerClass;
     
-    [MenuItem("Window/Player Database Editor")]
+    [MenuItem("Window/Database Editor")]
     public static void ShowWindow()
     {
-        GetWindow<PlayerEditorWindow>("Player Database Editor");
+        GetWindow<DatabaseEditorWindow>("Database Editor");
     }
 
     private void OnGUI()
     {
+  
+        
         GUILayout.BeginHorizontal();
         GUILayout.BeginVertical(GUILayout.Width(100));
         _selectedTab = GUILayout.SelectionGrid(_selectedTab, _tabs, 1, GUILayout.ExpandHeight(true));

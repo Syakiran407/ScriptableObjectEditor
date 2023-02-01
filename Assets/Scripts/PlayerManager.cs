@@ -11,11 +11,11 @@ public class PlayerManager : MonoBehaviour
 
     void Start()
     {
-        Debug.Log(player.playerName);
+   /*     Debug.Log(player.playerName);
         Debug.Log(playerClass.playerClass);
         Debug.Log(playerClass.description);
         Debug.Log(skills.skillName);
-        Debug.Log(weapons.weaponName);
+        Debug.Log(weapons.weaponName);*/
 
         // reset player
         // player.Reset();
@@ -25,7 +25,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (skills.skillName == "Super Punch" && skills.requiredWeapon == WeaponType.Boomerang)
+            if (skills.skillName == "Throw Boomerang" && weapons.weaponType == WeaponType.Boomerang)
             {
                 Debug.Log("You can use this skill");
             }

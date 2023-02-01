@@ -2,11 +2,12 @@ using UnityEngine;
 
 public enum WeaponType
 {
-    Sword, 
+    Sword,
     Axe,
     Bow,
     Boomerang
 }
+
 
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Create New Weapon")]
 public class Weapons : ScriptableObject
