@@ -10,7 +10,6 @@ public class ActorEnumDataDrawer : PropertyDrawer
         EditorGUI.BeginProperty(position, label, property);
 
         position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
-
         if (Actors.All != null)
         {
             int index = 0;
@@ -18,6 +17,7 @@ public class ActorEnumDataDrawer : PropertyDrawer
             foreach (var data in Actors.All)
             {
                 options[index++] = data.name;
+                
             }
 
             int value = EditorGUI.Popup(position, property.objectReferenceValue == null ? 0 : Array.IndexOf(Actors.All.ToArray(), property.objectReferenceValue), options);
@@ -29,12 +29,18 @@ public class ActorEnumDataDrawer : PropertyDrawer
             else
             {
                 Debug.LogError("Selected index is out of range");
+
+                // This is the fix
+                property.objectReferenceValue = null;
+
+
             }
         }
         else
         {
-            Debug.LogError("Actors object is null");
+            Debug.LogWarning("Actors object is null, skipping property drawer");
         }
+
 
         EditorGUI.EndProperty();
     }

@@ -21,9 +21,11 @@ public class Actors : ScriptableObject
         {
             if (all == null)
             {
-                all = new List<Actors>(Resources.LoadAll<Actors>(""));
+                
+                all = new List<Actors>(Resources.LoadAll<Actors>("Player Information/Player General"));
+              
             }
-
+           
             return all;
         }
     }

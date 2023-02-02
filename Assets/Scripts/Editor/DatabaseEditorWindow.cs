@@ -44,8 +44,10 @@ public class DatabaseEditorWindow : EditorWindow
                     if (GUILayout.Button("Create New Player"))
                     {
                         _actor = CreateInstance<Actors>();
-                        AssetDatabase.CreateAsset(_actor, "Assets/Player Information/Player General/NewPlayer.asset");
-                        AssetDatabase.SaveAssets();    
+                        AssetDatabase.CreateAsset(_actor, "Assets/Player Information/Player Genera/NewActor.asset");
+                        AssetDatabase.SaveAssets();
+
+                        Actors.All.Add(_actor);
                     }
                 }
                 else
@@ -87,6 +89,19 @@ public class DatabaseEditorWindow : EditorWindow
                         _actor = CreateInstance<Actors>();
                         AssetDatabase.CreateAsset(_actor, "Assets/Resources/NewActor.asset");
                         AssetDatabase.SaveAssets();
+
+                        Actors.All.Add(_actor);
+                    }
+
+                    if (GUILayout.Button("Delete"))
+                    {
+                        Actors.All.Remove(_actor);
+                        AssetDatabase.DeleteAsset(assetPath);
+                        AssetDatabase.SaveAssets();
+                        _actor = null;
+
+                     
+
                     }
                 }
 
@@ -204,8 +219,6 @@ public class DatabaseEditorWindow : EditorWindow
                     {
                         EditorUtility.SetDirty(skills);
                         AssetDatabase.SaveAssets();
-
-
                     }
                 }
 
