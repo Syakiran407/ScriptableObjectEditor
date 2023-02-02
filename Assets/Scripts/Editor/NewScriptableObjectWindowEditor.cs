@@ -30,8 +30,47 @@ public class NewScriptableObjectWindowEditor : EditorWindow
 
                 scriptableObjects.Add(newScriptableObject.name, newScriptableObject);
                 scriptableObjectNames.Add(newScriptableObject.name);
-                selectedScriptableObjectIndex = scriptableObjectNames.Count - 1;
+                selectedScriptableObjectIndex = scriptableObjectNames.Count - 1;            }
+        }
+
+        if (GUILayout.Button("Delete Scriptable Object"))
+        {
+            if (scriptableObjectNames.Count > 0)
+            {
+                string scriptableObjectToDelete = scriptableObjectNames[selectedScriptableObjectIndex];
+                scriptableObjectNames.RemoveAt(selectedScriptableObjectIndex);
+                scriptableObjects.Remove(scriptableObjectToDelete);
+                AssetDatabase.DeleteAsset("Assets/Resources/" + scriptableObjectToDelete + ".asset");
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
+                selectedScriptableObjectIndex = 0;
             }
+        }
+
+        if (GUILayout.Button("Save Scriptable Object"))
+        {
+            if (scriptableObjectNames.Count > 0)
+            {
+                EditorUtility.SetDirty(scriptableObjects[scriptableObjectNames[selectedScriptableObjectIndex]]);
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
+            }
+        }
+
+        if (scriptableObjectNames.Count > 0)
+        {
+           
+            scriptableObjects[scriptableObjectNames[selectedScriptableObjectIndex]].name = EditorGUILayout.TextField("Name:", scriptableObjects[scriptableObjectNames[selectedScriptableObjectIndex]].name);
+
+            // check if object has been destroyed
+            if (scriptableObjects[scriptableObjectNames[selectedScriptableObjectIndex]] == null)
+            {
+                scriptableObjectNames.RemoveAt(selectedScriptableObjectIndex);
+                selectedScriptableObjectIndex = 0;
+            }
+
+            scriptableObjects[scriptableObjectNames[selectedScriptableObjectIndex]].skillName = EditorGUILayout.TextField("Skill Name:", scriptableObjects[scriptableObjectNames[selectedScriptableObjectIndex]].skillName);
+            scriptableObjects[scriptableObjectNames[selectedScriptableObjectIndex]].description = EditorGUILayout.TextField("Skill Description:", scriptableObjects[scriptableObjectNames[selectedScriptableObjectIndex]].description);
         }
     }
 }
