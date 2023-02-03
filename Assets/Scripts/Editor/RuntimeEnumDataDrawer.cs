@@ -15,21 +15,26 @@ public class RuntimeEnumDataDrawer : PropertyDrawer
         string[] options = new string[RuntimeEnumData.All.Count];
         foreach (var data in RuntimeEnumData.All)
         {
-            options[index++] = data.name;
+
+            if (data != null)
+            {
+
+                options[index++] = data.name;
+            }
+
+            int value = EditorGUI.Popup(position, property.objectReferenceValue == null ? 0 : Array.IndexOf(RuntimeEnumData.All.ToArray(), property.objectReferenceValue), options);
+
+            if (value >= 0 && value < RuntimeEnumData.All.Count)
+            {
+                property.objectReferenceValue = RuntimeEnumData.All[value];
+            }
+            else
+            {
+                Debug.LogError("Selected index is out of range");
+            }
+
+
+            EditorGUI.EndProperty();
         }
-
-        int value = EditorGUI.Popup(position, property.objectReferenceValue == null ? 0 : Array.IndexOf(RuntimeEnumData.All.ToArray(), property.objectReferenceValue), options);
-
-        if (value >= 0 && value < RuntimeEnumData.All.Count)
-        {
-            property.objectReferenceValue = RuntimeEnumData.All[value];
-        }
-        else
-        {
-            Debug.LogError("Selected index is out of range");
-        }
-
-
-        EditorGUI.EndProperty();
     }
 }

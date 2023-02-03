@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 using System.Numerics;
+using static Codice.Client.Common.Connection.AskCredentialsToUser;
 
 public class DatabaseEditorWindow : EditorWindow
 {
@@ -22,10 +23,14 @@ public class DatabaseEditorWindow : EditorWindow
         GetWindow<DatabaseEditorWindow>("Database Editor");
     }
 
+    private void OnEnable()
+    {
+        _actor = (Actors)AssetDatabase.LoadAssetAtPath("Assets/Database/Actors.asset", typeof(Actors));
+    }
+
     private void OnGUI()
     {
-  
-        
+
         GUILayout.BeginHorizontal();
         GUILayout.BeginVertical(GUILayout.Width(100));
         _selectedTab = GUILayout.SelectionGrid(_selectedTab, _tabs, 1, GUILayout.ExpandHeight(true));
@@ -44,10 +49,15 @@ public class DatabaseEditorWindow : EditorWindow
                     if (GUILayout.Button("Create New Player"))
                     {
                         _actor = CreateInstance<Actors>();
-                        AssetDatabase.CreateAsset(_actor, "Assets/Player Information/Player Genera/NewActor.asset");
-                        AssetDatabase.SaveAssets();
-
+                        AssetDatabase.CreateAsset(_actor, "Assets/Player Information/Player General/NewActor.asset");
                         Actors.All.Add(_actor);
+                        AssetDatabase.SaveAssets();
+                        AssetDatabase.Refresh();
+
+                        Repaint();
+
+                        // 
+                        EditorApplication.projectChanged += Repaint;
                     }
                 }
                 else
@@ -72,25 +82,33 @@ public class DatabaseEditorWindow : EditorWindow
                     if (GUILayout.Button("Reset"))
                     {
                         _actor.Reset();
+                        AssetDatabase.Refresh();
+                        Repaint();
+                        EditorApplication.projectChanged += Repaint;
                     }
 
                     if (GUILayout.Button("Save"))
                     {
                         EditorUtility.SetDirty(_actor);
-                        AssetDatabase.SaveAssets();
-
                         //save Actor
                         Actors.All.Add(_actor);
-
+                        AssetDatabase.SaveAssets();
+                        AssetDatabase.Refresh();
+                        Repaint();
+                        EditorApplication.projectChanged += Repaint;
                     }
 
                     if (GUILayout.Button("Create New Player"))
                     {
                         _actor = CreateInstance<Actors>();
-                        AssetDatabase.CreateAsset(_actor, "Assets/Resources/NewActor.asset");
-                        AssetDatabase.SaveAssets();
+                        AssetDatabase.CreateAsset(_actor, "Assets/Player Information/Player General/NewActor.asset");
 
                         Actors.All.Add(_actor);
+                        AssetDatabase.SaveAssets();
+                        AssetDatabase.Refresh();
+
+                        Repaint();
+                        EditorApplication.projectChanged += Repaint;
                     }
 
                     if (GUILayout.Button("Delete"))
@@ -98,10 +116,8 @@ public class DatabaseEditorWindow : EditorWindow
                         Actors.All.Remove(_actor);
                         AssetDatabase.DeleteAsset(assetPath);
                         AssetDatabase.SaveAssets();
-                        _actor = null;
-
-                     
-
+                        AssetDatabase.Refresh();
+                        EditorApplication.projectChanged += Repaint;
                     }
                 }
 
@@ -314,8 +330,6 @@ public class DatabaseEditorWindow : EditorWindow
                         AssetDatabase.SaveAssets();
                     }
                 }
-
-
                 break;
         }
         GUILayout.EndVertical();

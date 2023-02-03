@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Actor", menuName = "Create New Actor")]
@@ -21,11 +22,18 @@ public class Actors : ScriptableObject
         {
             if (all == null)
             {
-                
-                all = new List<Actors>(Resources.LoadAll<Actors>("Player Information/Player General"));
-              
+                all = new List<Actors>();
+                var guids = AssetDatabase.FindAssets("t:Actors");
+                foreach (var guid in guids)
+                {
+                    var path = AssetDatabase.GUIDToAssetPath(guid);
+                    var asset = AssetDatabase.LoadAssetAtPath<Actors>(path);
+                    all.Add(asset);
+                    EditorApplication.projectChanged += OnProjectChanged;
+
+                  
+                }
             }
-           
             return all;
         }
     }
@@ -58,4 +66,26 @@ public class Actors : ScriptableObject
         level = 1;
         playerSprite = null;
     }
+
+    private void OnDestroy()
+    {
+        
+    }
+
+    static void OnProjectChanged()
+    {
+        Debug.Log("OnProjectChanged");
+
+
+        all = new List<Actors>();
+        var guids = AssetDatabase.FindAssets("t:Actors");
+        foreach (var guid in guids)
+        {
+            var path = AssetDatabase.GUIDToAssetPath(guid);
+            var asset = AssetDatabase.LoadAssetAtPath<Actors>(path);
+            all.Add(asset);
+  
+        }
+    }
+
 }

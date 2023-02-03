@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbcad72e85f993a45b8be17d93ba26f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 11400000, guid: 608ad495915649e4d8bc3db51b0c12ad, type: 2}
+  player: {fileID: 11400000, guid: 52c99e9b99a56e442b7ca231630df83c, type: 2}
   playerClass: {fileID: 11400000, guid: 0ffb5e4a864a14441a42d5306134617c, type: 2}
   skills: {fileID: 11400000, guid: 7fa9f1f8d83b65045a2e7363a2b2f7bc, type: 2}
   weapons: {fileID: 11400000, guid: c49dbf61006ec5c42a3b1af38a48bc2f, type: 2}

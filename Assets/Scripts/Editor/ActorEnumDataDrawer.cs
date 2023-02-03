@@ -17,7 +17,6 @@ public class ActorEnumDataDrawer : PropertyDrawer
             foreach (var data in Actors.All)
             {
                 options[index++] = data.name;
-                
             }
 
             int value = EditorGUI.Popup(position, property.objectReferenceValue == null ? 0 : Array.IndexOf(Actors.All.ToArray(), property.objectReferenceValue), options);
@@ -28,12 +27,7 @@ public class ActorEnumDataDrawer : PropertyDrawer
             }
             else
             {
-                Debug.LogError("Selected index is out of range");
-
-                // This is the fix
-                property.objectReferenceValue = null;
-
-
+                return;
             }
         }
         else
