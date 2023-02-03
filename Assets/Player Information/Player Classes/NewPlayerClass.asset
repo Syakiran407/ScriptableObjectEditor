@@ -9,10 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0016a57398e7260419f12c7ab959c05b, type: 3}
-  m_Name: Sword
+  m_Script: {fileID: 11500000, guid: 137be3378479bd44c8c85a1a774c89a5, type: 3}
+  m_Name: NewPlayerClass
   m_EditorClassIdentifier: 
-  weaponName: Sword
+  nextValue: 0
+  className: 
   description: 
-  weaponType: 0
-  price: 500
+  maxHP: 100
+  maxMP: 100
+  attack: 10
+  defense: 10
+  maxAttack: 10
+  maxDefense: 10
+  agility: 10
+  luck: 10

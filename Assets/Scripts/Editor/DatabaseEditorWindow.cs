@@ -1,21 +1,18 @@
 using System.Linq;
-using System;
 using UnityEditor;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
-using System.Numerics;
-using static Codice.Client.Common.Connection.AskCredentialsToUser;
+
 
 public class DatabaseEditorWindow : EditorWindow
 {
     private string[] _tabs = { "Actors", "Classes", "Skills", "Weapons", "Items" };
     private int _selectedTab;
     private Actors _actor;
-    public PlayerClass _playerClass;
-    public Skills skills;
-    public Weapons weapons;
+    private PlayerClass _playerClass;
+    private Skills skills;
+    private Weapons weapons;
     public Items items;
-    public PlayerClass playerClass;
+    //public PlayerClass playerClass;
     
     [MenuItem("Window/Database Editor")]
     public static void ShowWindow()
@@ -26,6 +23,7 @@ public class DatabaseEditorWindow : EditorWindow
     private void OnEnable()
     {
         _actor = (Actors)AssetDatabase.LoadAssetAtPath("Assets/Database/Actors.asset", typeof(Actors));
+        _playerClass = (PlayerClass)AssetDatabase.LoadAssetAtPath("Assets/Database/Actors.asset", typeof(PlayerClass));
     }
 
     private void OnGUI()
@@ -34,6 +32,7 @@ public class DatabaseEditorWindow : EditorWindow
         GUILayout.BeginHorizontal();
         GUILayout.BeginVertical(GUILayout.Width(100));
         _selectedTab = GUILayout.SelectionGrid(_selectedTab, _tabs, 1, GUILayout.ExpandHeight(true));
+
         GUILayout.EndVertical();
 
         GUILayout.BeginVertical();
@@ -76,7 +75,7 @@ public class DatabaseEditorWindow : EditorWindow
                     _actor.level = EditorGUILayout.IntField("Level", _actor.level);
                     _actor.playerSprite = (Sprite)EditorGUILayout.ObjectField("Sprite", _actor.playerSprite, typeof(Sprite), false);
                     //_actor.actors = (Actors)EditorGUILayout.ObjectField("Actors", _actor.actors, typeof(Actors), false);
-                    _actor.playerClass = PlayerClass.All[Mathf.Clamp(EditorGUILayout.Popup("PlayerClass", PlayerClass.All.IndexOf(_actor.playerClass), PlayerClass.All.Select(a => a.name).ToArray()), 0, PlayerClass.All.Count - 1)];
+                    _actor.playerClass = PlayerClass.All[Mathf.Clamp(EditorGUILayout.Popup("Class", PlayerClass.All.IndexOf(_actor.playerClass), PlayerClass.All.Select(a => a.name).ToArray()), 0, PlayerClass.All.Count - 1)];
 
                     
                     if (GUILayout.Button("Reset"))
@@ -252,8 +251,6 @@ public class DatabaseEditorWindow : EditorWindow
                         skills.skillName = EditorGUILayout.TextField("Skill Name", skills.skillName);
                         skills.description = EditorGUILayout.TextField("Description", skills.description);
                         skills.skillID = EditorGUILayout.IntField("Skill ID", skills.skillID);
-                        //skills.requiredWeapon = (WeaponType)EditorGUILayout.EnumPopup("Required Weapon", skills.requiredWeapon);
-
                         skills.skillPower = EditorGUILayout.IntField("Skill Power", skills.skillPower);
                         skills.skillCost = EditorGUILayout.IntField("Skill Cost", skills.skillCost);
                         skills.skillType = EditorGUILayout.IntField("Skill Type", skills.skillType);
@@ -266,6 +263,7 @@ public class DatabaseEditorWindow : EditorWindow
                         skills.skillStatusPower = EditorGUILayout.IntField("Skill Status Power", skills.skillStatusPower);
                         skills.skillStatusResistance = EditorGUILayout.IntField("Skill Status Resistance", skills.skillStatusResistance);
 
+                        skills.requiredWeapon = Weapons.All[Mathf.Clamp(EditorGUILayout.Popup("RequiredWeapon", Weapons.All.IndexOf(skills.requiredWeapon), Weapons.All.Select(a => a.name).ToArray()), 0, Weapons.All.Count - 1)];
 
                         if (GUILayout.Button("Reset"))
                         {
@@ -313,7 +311,7 @@ public class DatabaseEditorWindow : EditorWindow
                 break;
             case 3:
                 // Code for weapons
-                
+
                 weapons = (Weapons)EditorGUILayout.ObjectField(weapons, typeof(Weapons), false);
 
                 if (weapons == null)
@@ -345,15 +343,14 @@ public class DatabaseEditorWindow : EditorWindow
 
                     if (weapons != null)
                     {
-                        // load weapon data
+                        // load weapons data
                         weapons.weaponName = EditorGUILayout.TextField("Weapon Name", weapons.weaponName);
-                        weapons.description = EditorGUILayout.TextField("Description", weapons.description);
-                        //weapons.weaponID = EditorGUILayout.IntField("Weapon ID", weapons.weaponID);
                         weapons.weaponType = (WeaponType)EditorGUILayout.EnumPopup("Weapon Type", weapons.weaponType);
 
+                        
                         if (GUILayout.Button("Reset"))
                         {
-                            weapons.Reset();
+                            //weapons.Reset();
                             AssetDatabase.Refresh();
                             Repaint();
                             EditorApplication.projectChanged += Repaint;
@@ -370,10 +367,10 @@ public class DatabaseEditorWindow : EditorWindow
                             EditorApplication.projectChanged += Repaint;
                         }
 
-                        if (GUILayout.Button("Create New Weapons"))
+                        if (GUILayout.Button("Create New Weapon"))
                         {
                             weapons = CreateInstance<Weapons>();
-                            AssetDatabase.CreateAsset(weapons, "Assets/Player Information/Player Weapons/NewWeapons.asset");
+                            AssetDatabase.CreateAsset(weapons, "Assets/Player Information/Player Weapons/NewWeapon.asset");
 
                             Weapons.All.Add(weapons);
                             AssetDatabase.SaveAssets();
@@ -400,7 +397,7 @@ public class DatabaseEditorWindow : EditorWindow
             case 4:
                 // Code for items
 
-                items = (Items)EditorGUILayout.ObjectField(items, typeof(Items), false);
+               /* items = (Items)EditorGUILayout.ObjectField(items, typeof(Items), false);
 
 
                 if (items == null)
@@ -450,7 +447,7 @@ public class DatabaseEditorWindow : EditorWindow
                         EditorUtility.SetDirty(items);
                         AssetDatabase.SaveAssets();
                     }
-                }
+                }*/
                 break;
         }
         GUILayout.EndVertical();

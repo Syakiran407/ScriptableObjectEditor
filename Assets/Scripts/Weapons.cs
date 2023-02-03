@@ -93,18 +93,18 @@ public class Weapons : ScriptableObject
         }
     }
 
-    public void Reset()
+   /* public void Reset()
     {
         playerClasses.maxAttack = 0;
-        
-    }
+
+    }*/
 
     static void OnProjectChanged()
     {
         //Debug.Log("OnProjectChanged");
 
         all = new List<Weapons>();
-        var guids = AssetDatabase.FindAssets("t:Skills");
+        var guids = AssetDatabase.FindAssets("t:Weapons");
         foreach (var guid in guids)
         {
             var path = AssetDatabase.GUIDToAssetPath(guid);

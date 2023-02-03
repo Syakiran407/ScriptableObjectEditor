@@ -6,7 +6,26 @@ using UnityEngine;
 public class Skills : ScriptableObject
 {
     public Dictionary<string, int> values = new Dictionary<string, int>();
+
     public int nextValue = 0;
+
+    public string skillName;
+    public string description;
+    public int skillID;
+    [SerializeField]
+    public Weapons requiredWeapon;
+    public int skillPower;
+    public int skillCost;
+    public int skillType;
+    public int skillTarget;
+    public int skillRange;
+    public int skillAOE;
+    public int skillStatus;
+    public int skillStatusChance;
+    public int skillStatusDuration;
+    public int skillStatusPower;
+    public int skillStatusResistance;
+
 
     private static List<Skills> all;
     public static List<Skills> All
@@ -47,21 +66,20 @@ public class Skills : ScriptableObject
         return names;
     }
 
-    public string skillName;
-    public string description;
-    public int skillID;
-    //public WeaponType requiredWeapon;
-    public int skillPower;
-    public int skillCost;
-    public int skillType;
-    public int skillTarget;
-    public int skillRange;
-    public int skillAOE;
-    public int skillStatus;
-    public int skillStatusChance;
-    public int skillStatusDuration;
-    public int skillStatusPower;
-    public int skillStatusResistance;
+    static void OnProjectChanged()
+    {
+        //Debug.Log("OnProjectChanged");
+
+        all = new List<Skills>();
+        var guids = AssetDatabase.FindAssets("t:Actors");
+        foreach (var guid in guids)
+        {
+            var path = AssetDatabase.GUIDToAssetPath(guid);
+            var asset = AssetDatabase.LoadAssetAtPath<Skills>(path);
+            all.Add(asset);
+
+        }
+    }
 
 
     public void ParameterChanges()
@@ -97,19 +115,4 @@ public class Skills : ScriptableObject
         skillStatusPower = 0;
         skillStatusResistance = 0;
     }
-
-    static void OnProjectChanged()
-    {
-        //Debug.Log("OnProjectChanged");
-
-        all = new List<Skills>();
-        var guids = AssetDatabase.FindAssets("t:Skills");
-        foreach (var guid in guids)
-        {
-            var path = AssetDatabase.GUIDToAssetPath(guid);
-            var asset = AssetDatabase.LoadAssetAtPath<Skills>(path);
-            all.Add(asset);
-        }
-    }
-
 }

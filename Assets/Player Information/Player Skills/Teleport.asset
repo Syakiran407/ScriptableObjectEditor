@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1168ecc5e45669145808007a66e37f8d, type: 3}
-  m_Name: Throw Boomerang
+  m_Name: Teleport
   m_EditorClassIdentifier: 
   nextValue: 0
-  skillName: Throw Boomerang
+  skillName: 
   description: 
   skillID: 0
-  requiredWeapon: {fileID: 11400000, guid: 3fd428069a306ad40986e6c969bb0e0d, type: 2}
+  requiredWeapon: {fileID: 0}
   skillPower: 0
   skillCost: 0
   skillType: 0

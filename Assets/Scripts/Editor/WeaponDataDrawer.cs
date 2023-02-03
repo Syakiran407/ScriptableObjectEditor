@@ -10,23 +10,29 @@ public class WeaponDataDrawer : PropertyDrawer
         EditorGUI.BeginProperty(position, label, property);
 
         position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
-
-        int index = 0;
-        string[] options = new string[Weapons.All.Count];
-        foreach (var data in Weapons.All)
+        if (Weapons.All != null)
         {
-            options[index++] = data.name;
-        }
+            int index = 0;
+            string[] options = new string[Weapons.All.Count];
+            foreach (var data in Weapons.All)
+            {
+                options[index++] = data.name;
+            }
 
-        int value = EditorGUI.Popup(position, property.objectReferenceValue == null ? 0 : Array.IndexOf(Weapons.All.ToArray(), property.objectReferenceValue), options);
+            int value = EditorGUI.Popup(position, property.objectReferenceValue == null ? 0 : Array.IndexOf(Weapons.All.ToArray(), property.objectReferenceValue), options);
 
-        if (value >= 0 && value < Weapons.All.Count)
-        {
-            property.objectReferenceValue = Weapons.All[value];
+            if (value >= 0 && value < options.Length)
+            {
+                property.objectReferenceValue = Weapons.All[value];
+            }
+            else
+            {
+                return;
+            }
         }
         else
         {
-            Debug.LogError("Selected index is out of range");
+            Debug.LogWarning("Actors object is null, skipping property drawer");
         }
 
 
