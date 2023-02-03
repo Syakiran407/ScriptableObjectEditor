@@ -3,19 +3,21 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-
-    public Actors player;
-    public PlayerClasses playerClass;
+    [SerializeField]
+    public Actors actors;
+    public PlayerClass playerClass;
     public Skills skills;
     public Weapons weapons;
 
     void Start()
-    {
-   /*     Debug.Log(player.playerName);
-        Debug.Log(playerClass.playerClass);
-        Debug.Log(playerClass.description);
-        Debug.Log(skills.skillName);
-        Debug.Log(weapons.weaponName);*/
+    {    
+
+        
+        /*     Debug.Log(player.playerName);
+             Debug.Log(playerClass.playerClass);
+             Debug.Log(playerClass.description);
+             Debug.Log(skills.skillName);
+             Debug.Log(weapons.weaponName);*/
 
         // reset player
         // player.Reset();

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 137be3378479bd44c8c85a1a774c89a5, type: 3}
   m_Name: Warrior
   m_EditorClassIdentifier: 
-  playerClass: 0
-  description: Strong, skilled fighters who use weapons and armor to battle their
-    enemies.
+  nextValue: 0
+  className: 
+  description: 
   maxHP: 100
   maxMP: 100
   attack: 10

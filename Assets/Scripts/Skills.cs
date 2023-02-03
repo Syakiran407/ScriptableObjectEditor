@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Skill", menuName = "Create New Skill")]
@@ -6,33 +7,24 @@ public class Skills : ScriptableObject
 {
     public Dictionary<string, int> values = new Dictionary<string, int>();
     public int nextValue = 0;
-    public string skillName;
-    public string description;
-    public int skillID;
-    //public WeaponType requiredWeapon;
-    public int skillPower;
-    public int skillCost;
-    public int skillType;
-    public int skillTarget;
-    public int skillRange;
-    public int skillAOE;
-    public int skillStatus;
-    public int skillStatusChance;
-    public int skillStatusDuration;
-    public int skillStatusPower;
-    public int skillStatusResistance;
 
-
-    private static List<Items> all;
-    public static List<Items> All
+    private static List<Skills> all;
+    public static List<Skills> All
     {
         get
         {
             if (all == null)
             {
-                all = new List<Items>(Resources.LoadAll<Items>(""));
+                all = new List<Skills>();
+                var guids = AssetDatabase.FindAssets("t:Skills");
+                foreach (var guid in guids)
+                {
+                    var path = AssetDatabase.GUIDToAssetPath(guid);
+                    var asset = AssetDatabase.LoadAssetAtPath<Skills>(path);
+                    all.Add(asset);
+                    EditorApplication.projectChanged += OnProjectChanged;
+                }
             }
-
             return all;
         }
     }
@@ -54,6 +46,23 @@ public class Skills : ScriptableObject
         values.Keys.CopyTo(names, 0);
         return names;
     }
+
+    public string skillName;
+    public string description;
+    public int skillID;
+    //public WeaponType requiredWeapon;
+    public int skillPower;
+    public int skillCost;
+    public int skillType;
+    public int skillTarget;
+    public int skillRange;
+    public int skillAOE;
+    public int skillStatus;
+    public int skillStatusChance;
+    public int skillStatusDuration;
+    public int skillStatusPower;
+    public int skillStatusResistance;
+
 
     public void ParameterChanges()
     {
@@ -87,6 +96,20 @@ public class Skills : ScriptableObject
         skillStatusDuration = 0;
         skillStatusPower = 0;
         skillStatusResistance = 0;
+    }
+
+    static void OnProjectChanged()
+    {
+        //Debug.Log("OnProjectChanged");
+
+        all = new List<Skills>();
+        var guids = AssetDatabase.FindAssets("t:Skills");
+        foreach (var guid in guids)
+        {
+            var path = AssetDatabase.GUIDToAssetPath(guid);
+            var asset = AssetDatabase.LoadAssetAtPath<Skills>(path);
+            all.Add(asset);
+        }
     }
 
 }

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 137be3378479bd44c8c85a1a774c89a5, type: 3}
-  m_Name: Archer
+  m_Name: Wizard
   m_EditorClassIdentifier: 
   nextValue: 0
   className: 

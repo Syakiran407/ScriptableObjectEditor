@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 137be3378479bd44c8c85a1a774c89a5, type: 3}
-  m_Name: NewPlayerClass
+  m_Name: Samurai
   m_EditorClassIdentifier: 
-  playerClass: 2
-  description: 1
+  nextValue: 0
+  className: 
+  description: 
   maxHP: 100
   maxMP: 100
   attack: 10

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public enum WeaponType
@@ -9,32 +10,29 @@ public enum WeaponType
     Boomerang
 }
 
-
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Create New Weapon")]
 public class Weapons : ScriptableObject
 {
     public Dictionary<string, int> values = new Dictionary<string, int>();
     public int nextValue = 0;
-    public GameObject weaponObject;
-    public Collider2D weaponCollider;
-    public string weaponName;
-    public string description;
-    public WeaponType weaponType;
-    public int price;
-    
-    private PlayerClasses playerClasses;
 
-
-    private static List<Items> all;
-    public static List<Items> All
+    private static List<Weapons> all;
+    public static List<Weapons> All
     {
         get
         {
             if (all == null)
             {
-                all = new List<Items>(Resources.LoadAll<Items>(""));
+                all = new List<Weapons>();
+                var guids = AssetDatabase.FindAssets("t:Weapons");
+                foreach (var guid in guids)
+                {
+                    var path = AssetDatabase.GUIDToAssetPath(guid);
+                    var asset = AssetDatabase.LoadAssetAtPath<Weapons>(path);
+                    all.Add(asset);
+                    EditorApplication.projectChanged += OnProjectChanged;
+                }
             }
-
             return all;
         }
     }
@@ -56,6 +54,15 @@ public class Weapons : ScriptableObject
         values.Keys.CopyTo(names, 0);
         return names;
     }
+
+    public GameObject weaponObject;
+    public Collider2D weaponCollider;
+    public string weaponName;
+    public string description;
+    public WeaponType weaponType;
+    public int price;
+
+    private PlayerClass playerClasses;
 
     public void ParameterChanges()
     {
@@ -85,4 +92,25 @@ public class Weapons : ScriptableObject
             }
         }
     }
+
+    public void Reset()
+    {
+        playerClasses.maxAttack = 0;
+        
+    }
+
+    static void OnProjectChanged()
+    {
+        //Debug.Log("OnProjectChanged");
+
+        all = new List<Weapons>();
+        var guids = AssetDatabase.FindAssets("t:Skills");
+        foreach (var guid in guids)
+        {
+            var path = AssetDatabase.GUIDToAssetPath(guid);
+            var asset = AssetDatabase.LoadAssetAtPath<Weapons>(path);
+            all.Add(asset);
+        }
+    }
+
 }

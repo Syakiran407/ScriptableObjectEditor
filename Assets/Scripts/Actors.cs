@@ -12,8 +12,9 @@ public class Actors : ScriptableObject
     public string description;
     public int level;
     public Sprite playerSprite;
+
     [SerializeField]
-    public Actors actors;
+    public PlayerClass playerClass;
 
     private static List<Actors> all;
     public static List<Actors> All
@@ -30,8 +31,6 @@ public class Actors : ScriptableObject
                     var asset = AssetDatabase.LoadAssetAtPath<Actors>(path);
                     all.Add(asset);
                     EditorApplication.projectChanged += OnProjectChanged;
-
-                  
                 }
             }
             return all;
@@ -67,15 +66,9 @@ public class Actors : ScriptableObject
         playerSprite = null;
     }
 
-    private void OnDestroy()
-    {
-        
-    }
-
     static void OnProjectChanged()
     {
-        Debug.Log("OnProjectChanged");
-
+        //Debug.Log("OnProjectChanged");
 
         all = new List<Actors>();
         var guids = AssetDatabase.FindAssets("t:Actors");
@@ -87,5 +80,4 @@ public class Actors : ScriptableObject
   
         }
     }
-
 }

@@ -43,6 +43,7 @@ public class NewScriptableObjectWindowEditor : EditorWindow
                 AssetDatabase.DeleteAsset("Assets/Resources/" + scriptableObjectToDelete + ".asset");
                 AssetDatabase.SaveAssets();
                 AssetDatabase.Refresh();
+                
                 selectedScriptableObjectIndex = 0;
             }
         }

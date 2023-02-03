@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 137be3378479bd44c8c85a1a774c89a5, type: 3}
   m_Name: Mage
   m_EditorClassIdentifier: 
-  playerClass: 1
-  description: Powerful spellcasters who harness magic to manipulate the elements
-    and cast spells.
+  nextValue: 0
+  className: 
+  description: 
   maxHP: 100
   maxMP: 100
   attack: 10
