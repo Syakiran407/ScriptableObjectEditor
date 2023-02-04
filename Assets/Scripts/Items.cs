@@ -11,7 +11,6 @@ public class Items : ScriptableObject
     public string itemName;
     public string description;
     public int itemID;
-    public RuntimeEnumData runtimeEnum;
     public int itemPower;
     public int itemCost;
     public int itemStatus;

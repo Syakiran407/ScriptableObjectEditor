@@ -3,19 +3,21 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomPropertyDrawer(typeof(Skills))]
-public class SkillsDataDrawer : PropertyDrawer
+public class SkillsDataDrawer : PropertyDrawer 
 {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         EditorGUI.BeginProperty(position, label, property);
         
         position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
+
         if (Skills.All != null)
         {
             int index = 0;
             string[] options = new string[Skills.All.Count];
             foreach (var data in Skills.All)
             {
+
                 options[index++] = data.name;
             }
 

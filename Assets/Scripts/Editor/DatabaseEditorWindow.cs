@@ -12,9 +12,10 @@ public class DatabaseEditorWindow : EditorWindow
     private Skills skills;
     private Weapons weapons;
     public Items items;
+    private DrawBox drawBox;
     //public PlayerClass playerClass;
-    
-    [MenuItem("Window/Database Editor")]
+
+    [MenuItem("Database Editor/Database Editor")]
     public static void ShowWindow()
     {
         GetWindow<DatabaseEditorWindow>("Database Editor");
@@ -24,6 +25,7 @@ public class DatabaseEditorWindow : EditorWindow
     {
         _actor = (Actors)AssetDatabase.LoadAssetAtPath("Assets/Database/Actors.asset", typeof(Actors));
         _playerClass = (PlayerClass)AssetDatabase.LoadAssetAtPath("Assets/Database/Actors.asset", typeof(PlayerClass));
+        drawBox = new DrawBox();
     }
 
     private void OnGUI()
@@ -40,7 +42,7 @@ public class DatabaseEditorWindow : EditorWindow
         {
             case 0:
                 // code for actors tab 
-
+               
                 _actor = (Actors)EditorGUILayout.ObjectField(_actor, typeof(Actors), false);
 
                 if (_actor == null)
@@ -70,14 +72,28 @@ public class DatabaseEditorWindow : EditorWindow
                         AssetDatabase.RenameAsset(assetPath, newAssetName);
                     }
 
+
+                    // Wrap the property fields inside the DrawBox method
+                    // to make them look like a single element.
+
+                    //drawBox.DrawingBox(new Rect(20, 40, Screen.width - 20, 100), "Name Properties", EditorStyles.helpBox, Color.green);
+                    //GUILayout.BeginArea(new Rect(20, 40, Screen.width - 40, 80));
+
+            
+                    
                     _actor.playerName = EditorGUILayout.TextField("Name", _actor.playerName);
-                    _actor.description = EditorGUILayout.TextField("Description", _actor.description);
+                    _actor.description = EditorGUILayout.TextField("Description", _actor.description);   
                     _actor.level = EditorGUILayout.IntField("Level", _actor.level);
+                    //GUILayout.EndArea();
+
+
+
                     _actor.playerSprite = (Sprite)EditorGUILayout.ObjectField("Sprite", _actor.playerSprite, typeof(Sprite), false);
                     //_actor.actors = (Actors)EditorGUILayout.ObjectField("Actors", _actor.actors, typeof(Actors), false);
                     _actor.playerClass = PlayerClass.All[Mathf.Clamp(EditorGUILayout.Popup("Class", PlayerClass.All.IndexOf(_actor.playerClass), PlayerClass.All.Select(a => a.name).ToArray()), 0, PlayerClass.All.Count - 1)];
 
-                    
+                   
+
                     if (GUILayout.Button("Reset"))
                     {
                         _actor.Reset();

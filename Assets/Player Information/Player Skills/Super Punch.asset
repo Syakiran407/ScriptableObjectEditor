@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1168ecc5e45669145808007a66e37f8d, type: 3}
   m_Name: Super Punch
   m_EditorClassIdentifier: 
+  nextValue: 0
   skillName: Super Punch
   description: 
   skillID: 0
-  requiredWeapon: 3
+  requiredWeapon: {fileID: 11400000, guid: c49dbf61006ec5c42a3b1af38a48bc2f, type: 2}
   skillPower: 0
   skillCost: 0
   skillType: 0

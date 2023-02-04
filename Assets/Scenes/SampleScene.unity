@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actors: {fileID: 11400000, guid: 621010b8b17572845857a5c6ec5b22d0, type: 2}
-  playerClass: {fileID: 11400000, guid: 1da550d01da35274ab7354d50ea942c6, type: 2}
+  playerClass: {fileID: 11400000, guid: d70364bab88c2614389a7662297d62d3, type: 2}
   skills: {fileID: 11400000, guid: d15f05e4f3583584abc9c31f9caf69d2, type: 2}
   weapons: {fileID: 11400000, guid: 74459e05424eeea4b89acd0774462982, type: 2}
 --- !u!4 &423357697
