@@ -25,17 +25,7 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (skills.skillName == "Throw Boomerang" && weapons.weaponType == WeaponType.Boomerang)
-            {
-                Debug.Log("You can use this skill");
-            }
-            else
-            {
-                Debug.Log("You can't use this skill");
-            }
-        }
+        
     }
 
 }

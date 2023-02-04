@@ -152,10 +152,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbcad72e85f993a45b8be17d93ba26f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actors: {fileID: 11400000, guid: cfbd786d6c4ad4a48b6378c368eec026, type: 2}
-  playerClass: {fileID: 11400000, guid: 87123742c2461bf4fab9eeda129016a5, type: 2}
-  skills: {fileID: 11400000, guid: 7fa9f1f8d83b65045a2e7363a2b2f7bc, type: 2}
-  weapons: {fileID: 11400000, guid: 3fd428069a306ad40986e6c969bb0e0d, type: 2}
+  actors: {fileID: 11400000, guid: 621010b8b17572845857a5c6ec5b22d0, type: 2}
+  playerClass: {fileID: 11400000, guid: 1da550d01da35274ab7354d50ea942c6, type: 2}
+  skills: {fileID: 11400000, guid: d15f05e4f3583584abc9c31f9caf69d2, type: 2}
+  weapons: {fileID: 11400000, guid: 74459e05424eeea4b89acd0774462982, type: 2}
 --- !u!4 &423357697
 Transform:
   m_ObjectHideFlags: 0

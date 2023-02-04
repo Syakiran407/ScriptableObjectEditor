@@ -71,7 +71,7 @@ public class Skills : ScriptableObject
         //Debug.Log("OnProjectChanged");
 
         all = new List<Skills>();
-        var guids = AssetDatabase.FindAssets("t:Actors");
+        var guids = AssetDatabase.FindAssets("t:Skills");
         foreach (var guid in guids)
         {
             var path = AssetDatabase.GUIDToAssetPath(guid);
