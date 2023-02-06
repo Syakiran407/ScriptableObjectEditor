@@ -15,6 +15,12 @@ public class DatabaseEditorWindow : EditorWindow
     private DrawBox drawBox;
     //public PlayerClass playerClass;
 
+
+    private ScriptableObject actorScriptableObject;
+    private string[] actorScriptableObjectNames;
+    private int selectedIndex = 0;
+    private Object[] actorScriptableObjects;
+
     [MenuItem("Database Editor/Database Editor")]
     public static void ShowWindow()
     {
@@ -42,8 +48,10 @@ public class DatabaseEditorWindow : EditorWindow
         {
             case 0:
                 // code for actors tab 
-               
+
                 _actor = (Actors)EditorGUILayout.ObjectField(_actor, typeof(Actors), false);
+               
+
 
                 if (_actor == null)
                 {
@@ -78,15 +86,11 @@ public class DatabaseEditorWindow : EditorWindow
 
                     //drawBox.DrawingBox(new Rect(20, 40, Screen.width - 20, 100), "Name Properties", EditorStyles.helpBox, Color.green);
                     //GUILayout.BeginArea(new Rect(20, 40, Screen.width - 40, 80));
-
-            
                     
                     _actor.playerName = EditorGUILayout.TextField("Name", _actor.playerName);
                     _actor.description = EditorGUILayout.TextField("Description", _actor.description);   
                     _actor.level = EditorGUILayout.IntField("Level", _actor.level);
                     //GUILayout.EndArea();
-
-
 
                     _actor.playerSprite = (Sprite)EditorGUILayout.ObjectField("Sprite", _actor.playerSprite, typeof(Sprite), false);
                     //_actor.actors = (Actors)EditorGUILayout.ObjectField("Actors", _actor.actors, typeof(Actors), false);

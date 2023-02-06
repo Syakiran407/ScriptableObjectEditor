@@ -12,3 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6ba390b1d27a214e9b0a6e6cbb23fa1, type: 3}
   m_Name: InputEvent
   m_EditorClassIdentifier: 
+  nextValue: 0
+  horizontalInput: Horizontal
+  verticalInput: Vertical
